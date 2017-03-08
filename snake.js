@@ -44,10 +44,18 @@ function Snake() {
     }
 
     this.checkStatus = function() {
+        if (this.dead == true) {
+            return;
+        }
+
         for (var i = 0; i < this.size - 1; i++) {
             if (this.d.equals(this.tail[i])) {
                 this.dead = true;
             }
+        }
+        
+        if (this.dead == true) {
+            console.log("dead");
         }
     }
 }

@@ -1,4 +1,9 @@
-GRID_SIZE = 20;
+var GRID_SIZE = 16;
+
+var mic = new p5.SpeechRec();
+mic.continuous = true;
+mic.interimResults = true;
+var snake, food, fimg;
 
 function randomPosition() {
     var x = floor(random(width / GRID_SIZE));
@@ -11,10 +16,8 @@ function setup() {
 
     snake = new Snake();
     food = new Food();
+    fimg = loadImage("img/food.png");
 
-    mic = new p5.SpeechRec();
-    mic.continuous = true;
-    mic.interimResults = true;
     mic.onResult = parseResult;
     mic.start();
 
@@ -25,19 +28,19 @@ function parseResult() {
     var word = mic.resultString.split(' ').pop();
     console.log(word);
 
-    if (word.indexOf('down') != -1) {
-        snake.face(0, -1);
-    } else if (word.indexOf('up') != -1) {
+    if (word.indexOf('d') != -1) {
         snake.face(0, 1);
-    } else if (word.indexOf('left') != -1) {
+    } else if (word.indexOf('u') != -1) {
+        snake.face(0, -1);
+    } else if (word.indexOf('l') != -1) {
         snake.face(-1, 0);
-    } else if (word.indexOf('right') != -1) {
+    } else if (word.indexOf('r') != -1) {
         snake.face(1, 0);
     }
 }
 
 function draw() {
-    background(53);
+    background(0);
 
     if (snake.eats(food)) {
         food = new Food();
